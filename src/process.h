@@ -48,6 +48,7 @@ void proc_wakeup(pid_t pid);
 pid_t proc_getpid(void);
 pid_t proc_getppid(void);
 process_t* proc_get(pid_t pid);
+process_t* proc_get_by_index(int index);
 void proc_list(void);
 
 /* IPC */
