@@ -112,6 +112,13 @@ process_t* proc_get(pid_t pid) {
     return NULL;
 }
 
+process_t* proc_get_by_index(int index) {
+    if (index >= 0 && index < MAX_PROCESSES) {
+        return &procs[index];
+    }
+    return NULL;
+}
+
 void proc_list(void) {
     serial_puts("\n--- PROCESS TABLE STATUS ---\n");
     serial_puts("PID\tPPID\tSTATE\t\tTICKS\n");
