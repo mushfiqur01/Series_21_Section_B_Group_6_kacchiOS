@@ -1,20 +1,29 @@
-# Group 21B6 - kacchiOS Makefile
-CC = i686-elf-gcc
+# Group 21B6 - kacchiOS Makefile 
+CC = gcc
 AS = nasm
-LDFLAGS = -T src/linker.ld -ffreestanding -O2 -nostdlib
-CFLAGS = -ffreestanding -O2 -Wall -Wextra -Isrc
+LD = ld  
 
-OBJ = src/boot.o src/kernel.o src/serial.o src/string.o \
-      src/memory.o src/process.o src/scheduler.o
+LDFLAGS = -m elf_i386 -T linker.ld
+CFLAGS = -m32 -ffreestanding -O2 -Wall -Wextra -I.
+
+OBJ = boot.o kernel.o serial.o string.o \
+      memory.o process.o scheduler.o
+
+all: kacchiOS.bin
 
 kacchiOS.bin: $(OBJ)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) -lgcc
+	$(LD) $(LDFLAGS) -o $@ $(OBJ)
 
-src/%.o: src/%.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-src/boot.o: src/boot.s
+boot.o: boot.s
 	$(AS) -f elf32 $< -o $@
 
+run: kacchiOS.bin
+	qemu-system-i386 -kernel kacchiOS.bin -serial stdio
+
 clean:
-	rm -f src/*.o kacchiOS.bin
+	rm -f *.o kacchiOS.bin
+
+.PHONY: all clean run
