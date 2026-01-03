@@ -25,7 +25,7 @@ void kernel_main() {
     serial_puts("=== kacchiOS Final Integration Demo ===\n");
 
     // --- FEATURE: MEMORY MANAGER ---
-    serial_puts("\n[1] TESTING MEMORY MANAGER (Must/Good/Bonus)\n");
+    serial_puts("\n[1] TESTING MEMORY MANAGER\n");
     mem_init();
     void* a = malloc(1024); // Triggers splitting logic
     void* b = malloc(512);
@@ -35,7 +35,7 @@ void kernel_main() {
     mem_status();
 
     // --- FEATURE: PROCESS MANAGER & IPC ---
-    serial_puts("\n[2] TESTING PROCESS MANAGER & IPC (Must/Good/Bonus)\n");
+    serial_puts("\n[2] TESTING PROCESS MANAGER & IPC\n");
     proc_init();
     pid_t p1 = proc_create(0, task_entry);
     
@@ -47,7 +47,7 @@ void kernel_main() {
     proc_list();
 
     // --- FEATURE: SCHEDULER & AGING ---
-    serial_puts("\n[3] TESTING SCHEDULER & AGING (Must/Good/Bonus)\n");
+    serial_puts("\n[3] TESTING SCHEDULER & AGING\n");
     scheduler_init();
     scheduler_set_quantum(10); // Demonstrate configurable quantum
 
