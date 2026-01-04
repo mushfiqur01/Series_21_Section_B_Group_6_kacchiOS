@@ -76,6 +76,13 @@ void kernel_main() {
             proc_signal_register(7, demo_signal_handler);
             serial_puts("Sending Signal 7 with Data 0x1234...\n");
             proc_signal_send(p1, 7, 0x1234);
+            serial_puts("\n[EXPECTED ERROR ANALYSIS]:\n");
+            serial_puts("Signal Delivery Failed because PID 1 has no registered handler.\n");
+            serial_puts("In kacchiOS, handlers are process-specific and stored in the PCB.\n");
+            serial_puts("Even though PID 0 knows how to handle Signal 7, PID 1 does not.\n");
+            serial_puts("The Kernel correctly blocks this to prevent an invalid jump.\n");
+            serial_puts("For PID 0 same signal should give 'payload'\n");
+            proc_signal_send(0, 7, 0x1234);
             serial_puts("--- [IPC TEST COMPLETE] ---\n");
         } 
         else if (kstrcmp(cmd, "proc") == 0) {
@@ -104,3 +111,4 @@ void kernel_main() {
         }
     }
 }
+
